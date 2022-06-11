@@ -151,7 +151,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
 	if (htim->Instance == TIM7){
 		readAccelerometerData_SPI((float*)&accelerometerData);
 		readGyroscopeData_SPI((float*)&gyroscopeData);
-		lowPassGyro_MoveAve_new((float*)&gyroscopeData, (float*)&gyroscopeData_filt);
+		lowPassGyro_MoveAve((float*)&gyroscopeData, (float*)&gyroscopeData_filt);
 		MadgwickAHRSupdateIMU(-gyroscopeData_filt[0], gyroscopeData_filt[1], -gyroscopeData_filt[2], -accelerometerData[0], accelerometerData[1], -accelerometerData[2]);
 		calculateAnglesFromQuaternion();
 	}

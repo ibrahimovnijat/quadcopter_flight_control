@@ -48,18 +48,13 @@ volatile float twoKi;
 volatile float beta;
 
 
-void complementaryFilter_v1(float* accelData, float* gyroData, float* roll, float* pitch);
-void complementaryFilter_v2(float* accelData, float* gyroData, float* roll, float* pitch);
+void complementaryFilter(float* accelData, float* gyroData, float* roll, float* pitch);
 void MahonyAHRSupdateIMU(float gx, float gy, float gz, float ax, float ay, float az);
 void MadgwickAHRSupdateIMU(float gx, float gy, float gz, float ax, float ay, float az);
 void calculateAnglesFromQuaternion(void);
 
-void ahrs_fusion_ag(float* acc, float* gyro);
-//static float invSqrt(float x);
-
 void lowPassGyro(float* gyroData);
 void lowPassAccel(float* accelData);
-void lowPassGyro_MoveAve(float* gyroData);
-void lowPassGyro_MoveAve_new(float* gyroData, float* gyroData_filt);
+void lowPassGyro_MoveAve(float* gyroData, float* gyroData_filt);
 
 #endif /* FILTERS_H_ */

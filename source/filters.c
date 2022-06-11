@@ -7,17 +7,8 @@ volatile float beta = betaDef;
 
 static float invSqrt(float x);
 
-void complementaryFilter_v1(float* accelData, float* gyroData, float* roll, float* pitch)
-{
-	float accRoll  = atan2((float)accelData[1], (float) sqrt(accelData[0]*accelData[0] + accelData[2]*accelData[2])) * rad2deg;
-	float accPitch = atan2((float)accelData[0], (float)sqrt(accelData[1]*accelData[1] + accelData[2]*accelData[2])) * (-rad2deg);
-	*roll  =  alpha * (gyroData[0] * Dt + rollAngle_prev)  + (1-alpha) * accRoll;
-	*pitch =  alpha * (gyroData[1] * Dt + pitchAngle_prev) + (1-alpha) * accPitch;
-	rollAngle_prev = *roll;
-	pitchAngle_prev = *pitch;
-}
 
-void complementaryFilter_v2(float* accelData, float* gyroData, float* roll, float* pitch)
+void complementaryFilter(float* accelData, float* gyroData, float* roll, float* pitch)
 {
 	float accRoll  = atan2((float)accelData[1], (float)sqrt(accelData[0]*accelData[0] + accelData[2]*accelData[2])) * rad2deg;
 	float accPitch = atan2((float)accelData[0], (float)sqrt(accelData[1]*accelData[1] + accelData[2]*accelData[2])) * (-rad2deg);
@@ -216,22 +207,9 @@ void lowPassGyro(float* gyroData)
 	prev_gyroData[2] = gyroData[2];
 }
 
-void lowPassGyro_MoveAve(float* gyroData)
-{
-	gyroData[0] = (gyroData[0] + prev_gyroData[0] + prev_gyroData2[0]) / 3.0f;
-	prev_gyroData2[0] = prev_gyroData[0];
-	prev_gyroData[0] = gyroData[0];
 
-	gyroData[1] = (gyroData[1] + prev_gyroData[1] + prev_gyroData2[1]) / 3.0f;
-	prev_gyroData2[1] = prev_gyroData[1];
-	prev_gyroData[1] = gyroData[1];
 
-	gyroData[2] = (gyroData[2] + prev_gyroData[1] + prev_gyroData2[2]) / 3.0f;
-	prev_gyroData2[2] = prev_gyroData[2];
-	prev_gyroData[2] = gyroData[2];
-}
-
-void lowPassGyro_MoveAve_new(float* gyroData, float* gyroData_filt)
+void lowPassGyro_MoveAve(float* gyroData, float* gyroData_filt)
 {
 	gyroData_filt[0] = (gyroData[0] + prev_gyroData[0] + prev_gyroData2[0]) / 3.0f;
 	prev_gyroData2[0] = prev_gyroData[0];
